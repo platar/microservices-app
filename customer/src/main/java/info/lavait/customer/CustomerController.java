@@ -1,4 +1,4 @@
-package info.lavait.fraud.customer;
+package info.lavait.customer;
 
 
 import lombok.AllArgsConstructor;

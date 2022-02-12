@@ -1,4 +1,4 @@
-package info.lavait.fraud.customer;
+package info.lavait.customer;
 
 public record CustomerRegistrationRequest(
         String firstName,

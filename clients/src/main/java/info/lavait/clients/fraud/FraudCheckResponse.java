@@ -1,4 +1,4 @@
-package info.lavait.fraud;
+package info.lavait.clients.fraud;
 
 public record FraudCheckResponse(Boolean isFraudster) {
 }
