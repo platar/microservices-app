@@ -15,9 +15,9 @@ public class CustomerService {
 
     public void registerCustomer(CustomerRegistrationRequest customerRegistrationRequest) {
         Customer customer = Customer.builder()
-                .firstName(customerRegistrationRequest.firstName())
-                .lastName(customerRegistrationRequest.lastName())
-                .email(customerRegistrationRequest.email())
+                .firstName(customerRegistrationRequest.getFirstName())
+                .lastName(customerRegistrationRequest.getLastName())
+                .email(customerRegistrationRequest.getEmail())
                 .build();
 
         // check if emial valid
@@ -34,7 +34,7 @@ public class CustomerService {
         FraudCheckResponse fraudCheckResponse = fraudClient.isFraudster(customer.getId());
 
         // check if fraudter
-        if(fraudCheckResponse.isFraudster()) {
+        if(fraudCheckResponse.getIsFraudster()) {
             throw new IllegalStateException("frauster");
         }
 

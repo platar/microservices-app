@@ -5,23 +5,25 @@ server:
 spring:
   application:
     name: customer
-
   datasource:
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/customer?useUnicode=true&serverTimezone=UTC
-    username: customer
-    password: customer
+    password: password
+    url: jdbc:postgresql://postgres:5432/customer
+    username: oti
   jpa:
     hibernate:
       ddl-auto: create-drop
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
     show-sql: true
+  zipkin:
+    base-url: http://zipkin:9411
 
 eureka:
   client:
-    service-utl:
-      defaultZone: http://localhost:8761/eureka
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka
     fetch-registry: true
     register-with-eureka: true
+#    enabled: false
