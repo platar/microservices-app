@@ -1,5 +1,4 @@
 version: '3.5'
-
 services:
   postgres:
     container_name: postgres_container
@@ -16,9 +15,8 @@ services:
     networks:
       - postgres
     restart: unless-stopped
-  
   pgadmin:
-    container_name: pgadmin_container
+    container_name: pgadmin
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
@@ -31,7 +29,6 @@ services:
     networks:
       - postgres
     restart: unless-stopped
-
   zipkin:
     image: openzipkin/zipkin
     container_name: zipkin
@@ -39,9 +36,8 @@ services:
       - "9411:9411"
     networks:
       - spring
-
   eureka-server:
-    container_name: eureka_server
+    container_name: eureka-server
     build: ./eureka-server
     environment:
       - SPRING_PROFILES_ACTIVE=docker
@@ -52,7 +48,6 @@ services:
       - zipkin
     networks:
       - spring
-
   apigw:
     build: ./apigw
     container_name: apigw
@@ -65,7 +60,6 @@ services:
     depends_on:
       - zipkin
       - eureka-server
-
   fraud:
     container_name: fraud
     build: ./fraud
@@ -80,7 +74,6 @@ services:
     networks:
       - spring
       - postgres
-
   customer:
     container_name: customer
     build: ./customer
@@ -95,7 +88,6 @@ services:
     networks:
       - spring
       - postgres
-
   notification:
     container_name: notification
     build: ./notification
@@ -110,7 +102,6 @@ services:
     networks:
       - spring
       - postgres
-
 networks:
   postgres:
     driver: bridge
