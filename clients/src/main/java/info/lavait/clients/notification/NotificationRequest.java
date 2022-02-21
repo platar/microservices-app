@@ -1,4 +1,4 @@
-package info.lavait.notification;
+package info.lavait.clients.notification;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

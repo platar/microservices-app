@@ -1,5 +1,6 @@
 package info.lavait.notification;
 
+import info.lavait.clients.notification.NotificationRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ public class NotificationService {
                 Notification.builder()
                         .toCustomerId(notificationRequest.getToCustomerId())
                         .toCustomerEmail(notificationRequest.getToCustomerName())
-                        .sender("Amigoscode")
+                        .sender("Oti")
                         .message(notificationRequest.getMessage())
                         .sentAt(LocalDateTime.now())
                         .build()

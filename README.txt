@@ -12,3 +12,6 @@ http://localhost:5050/browser/
 mvn clean package
 sudo docker-compose up --build
 sudo docker-compose down
+
+
+http://notification:8082/api/v1/notification

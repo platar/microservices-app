@@ -2,6 +2,8 @@ package info.lavait.customer;
 
 import info.lavait.clients.fraud.FraudCheckResponse;
 import info.lavait.clients.fraud.FraudClient;
+import info.lavait.clients.notification.NotificationClient;
+import info.lavait.clients.notification.NotificationRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,7 @@ public class CustomerService {
     private final CustomerRepository customerRepository;
 //    private final RestTemplate restTemplate;
     private final FraudClient fraudClient;
+    private final NotificationClient notificationClient;
 
     public void registerCustomer(CustomerRegistrationRequest customerRegistrationRequest) {
         Customer customer = Customer.builder()
@@ -39,12 +42,14 @@ public class CustomerService {
         }
 
         // send notification
-//        NotificationRequest notificationRequest = new NotificationRequest(
-//                customer.getId(),
-//                customer.getEmail(),
-//                String.format("Hi %s, welcome to Amigoscode...",
-//                        customer.getFirstName())
-//        );
+        NotificationRequest notificationRequest = new NotificationRequest(
+                customer.getId(),
+                customer.getEmail(),
+                String.format("Hi %s, welcome to Amigoscode...",
+                        customer.getFirstName())
+        );
+
+        notificationClient.sendNotification(notificationRequest);
 //        rabbitMQMessageProducer.publish(
 //                notificationRequest,
 //                "internal.exchange",

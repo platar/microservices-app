@@ -10,6 +10,7 @@ services:
       PGDATA: /data/postgres
     volumes:
       - postgres:/data/postgres
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "5432:5432"
     networks:
@@ -30,6 +31,7 @@ services:
     networks:
       - postgres
     restart: unless-stopped
+
   zipkin:
     image: openzipkin/zipkin
     container_name: zipkin
@@ -50,6 +52,19 @@ services:
       - zipkin
     networks:
       - spring
+
+  apigw:
+    build: ./apigw
+    container_name: apigw
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+    depends_on:
+      - zipkin
+      - eureka-server
 
   fraud:
     container_name: fraud
@@ -73,6 +88,21 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
     ports:
       - "8080:8080"
+    depends_on:
+      - postgres
+      - zipkin
+      - eureka-server
+    networks:
+      - spring
+      - postgres
+
+  notification:
+    container_name: notification
+    build: ./notification
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - "8082:8082"
     depends_on:
       - postgres
       - zipkin
